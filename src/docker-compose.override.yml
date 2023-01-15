@@ -15,6 +15,41 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  discountdb:
+    container_name: discountdb
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=discountdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  mongoclient:
+    container_name: mongoclient
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - discountdb
+    volumes:
+      - mongoclient_data:/data/db
+
+  pgadmin:
+    container_name: pgadmin
+    restart: always
+    ports:
+      - 5050:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin1234
+    depends_on:
+      - basketdb
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+
   basket.api:
     container_name: basket.api
     environment:
