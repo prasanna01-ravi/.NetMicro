@@ -21,6 +21,10 @@ namespace Basket.API.Repositories
 
         public async Task<ShoppingCart?> GetBasketAsync(string username)
         {
+            if(_redisCache == null)
+            {
+                return null;
+            }
             string shoppingCartVal = await _redisCache.GetStringAsync(username);
             if (String.IsNullOrEmpty(shoppingCartVal))
             {
@@ -29,7 +33,7 @@ namespace Basket.API.Repositories
             return JsonConvert.DeserializeObject<ShoppingCart>(shoppingCartVal);
         }
 
-        public async Task<ShoppingCart> UpdateBasketAsync(ShoppingCart shoppingCart)
+        public async Task<ShoppingCart?> UpdateBasketAsync(ShoppingCart shoppingCart)
         {
             if(shoppingCart == null || String.IsNullOrEmpty(shoppingCart.UserName))
             {
