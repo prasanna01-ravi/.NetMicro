@@ -21,7 +21,7 @@ namespace Basket.API.Repositories
 
         public async Task<ShoppingCart?> GetBasketAsync(string username)
         {
-            if(_redisCache == null)
+            if(_redisCache == null || String.IsNullOrEmpty(username))
             {
                 return null;
             }

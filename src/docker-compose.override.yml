@@ -69,6 +69,16 @@ services:
       - "8000:80"
     depends_on:
       - catalogdb
+
+  discount.api:
+    container_name: discount.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:default=Server=discountdb;Port=5432;Database=discountdb;User Id=admin;Password=admin1234;"
+    ports:
+      - "8002:80"  
+    depends_on:
+      - discountdb
   
   portainer:
     container_name: portainer
@@ -79,4 +89,3 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
-
