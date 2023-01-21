@@ -17,7 +17,7 @@ namespace Discount.API.data
         {
             if(Connection == null)
             {
-                string connectionString = _configuration.GetConnectionString("default");
+                string connectionString = _configuration.GetConnectionString("default") ?? "";
                 Connection = new NpgsqlConnection(_configuration.GetConnectionString("default"));
             }
             return Connection;

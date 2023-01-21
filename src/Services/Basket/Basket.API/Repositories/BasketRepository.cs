@@ -25,7 +25,7 @@ namespace Basket.API.Repositories
             {
                 return null;
             }
-            string shoppingCartVal = await _redisCache.GetStringAsync(username);
+            string shoppingCartVal = await _redisCache.GetStringAsync(username) ?? "";
             if (String.IsNullOrEmpty(shoppingCartVal))
             {
                 return null;
