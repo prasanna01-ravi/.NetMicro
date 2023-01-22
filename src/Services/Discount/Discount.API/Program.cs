@@ -1,6 +1,6 @@
-using Discount.API.data;
-using Discount.API.Extensions;
-using Discount.API.repositories;
+using Discount.Business.data;
+using Discount.Business.Extensions;
+using Discount.Business.repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

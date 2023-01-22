@@ -1,9 +1,10 @@
-﻿using Npgsql;
+﻿using Microsoft.Extensions.Configuration;
+using Npgsql;
 using System.Data.Common;
 
-namespace Discount.API.data
+namespace Discount.Business.data
 {
-    public class DiscountContext: IDiscountContext
+    public class DiscountContext : IDiscountContext
     {
         private readonly IConfiguration _configuration;
         private DbConnection? Connection;
@@ -15,7 +16,7 @@ namespace Discount.API.data
 
         public DbConnection GetConnection()
         {
-            if(Connection == null)
+            if (Connection == null)
             {
                 string connectionString = _configuration.GetConnectionString("default") ?? "";
                 Connection = new NpgsqlConnection(_configuration.GetConnectionString("default"));

@@ -1,5 +1,5 @@
-﻿using Discount.API.Entities;
-using Discount.API.repositories;
+﻿using Discount.Business.Entities;
+using Discount.Business.repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

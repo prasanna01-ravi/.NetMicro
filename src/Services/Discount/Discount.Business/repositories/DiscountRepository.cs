@@ -1,9 +1,9 @@
 ﻿using Dapper;
-using Discount.API.data;
-using Discount.API.Entities;
+using Discount.Business.data;
+using Discount.Business.Entities;
 using System.Data.Common;
 
-namespace Discount.API.repositories
+namespace Discount.Business.repositories
 {
     public class DiscountRepository : IDiscountRepository
     {

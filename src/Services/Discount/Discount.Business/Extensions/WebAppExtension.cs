@@ -1,13 +1,16 @@
-﻿using Discount.API.data;
+﻿using Discount.Business.data;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Npgsql;
 
-namespace Discount.API.Extensions
+namespace Discount.Business.Extensions
 {
     public static class WebAppExtension
     {
         public static IHost MigrateDatabase(this IHost app, int retryCount = 0)
         {
-            using(var scope = app.Services.CreateScope())
+            using (var scope = app.Services.CreateScope())
             {
                 ILogger logger = scope.ServiceProvider.GetRequiredService<ILogger<IHost>>();
 
@@ -55,7 +58,7 @@ namespace Discount.API.Extensions
                     }
                 }
             }
-            
+
             return app;
         }
     }

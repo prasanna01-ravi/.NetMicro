@@ -1,6 +1,6 @@
-﻿using Discount.API.Entities;
+﻿using Discount.Business.Entities;
 
-namespace Discount.API.repositories
+namespace Discount.Business.repositories
 {
     public interface IDiscountRepository
     {

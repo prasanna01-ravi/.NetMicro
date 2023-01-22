@@ -1,6 +1,6 @@
 ﻿using System.Data.Common;
 
-namespace Discount.API.data
+namespace Discount.Business.data
 {
     public interface IDiscountContext
     {
