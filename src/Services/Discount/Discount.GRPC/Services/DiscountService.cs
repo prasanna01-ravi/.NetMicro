@@ -1,0 +1,33 @@
+﻿using AutoMapper;
+using Discount.Business.repositories;
+using Discount.GRPC.Protos;
+using Grpc.Core;
+
+namespace Discount.GRPC.Services
+{
+    public class DiscountService: DiscountProtoService.DiscountProtoServiceBase
+    {
+        private readonly IDiscountRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly ILogger<DiscountService> _logger;
+
+        public DiscountService(IDiscountRepository repository, IMapper mapper, ILogger<DiscountService> logger)
+        {
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        public override async Task<Coupon> GetDiscount(GetDiscountRequest request, ServerCallContext context)
+        {
+            var coupon = await _repository.GetDiscount(request.ProductName);
+            if(coupon == null) 
+            {
+                throw new RpcException(new Status(StatusCode.NotFound, $"Discount with ProductName={request.ProductName} not found"));
+            }
+
+            _logger.LogInformation("Discount received for Product Name : {productName}, Amount : {amount}", coupon.ProductName, coupon.Amount);
+            return _mapper.Map<Coupon>(coupon);
+        }
+    }
+}
