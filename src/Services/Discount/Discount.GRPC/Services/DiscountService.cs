@@ -29,5 +29,36 @@ namespace Discount.GRPC.Services
             _logger.LogInformation("Discount received for Product Name : {productName}, Amount : {amount}", coupon.ProductName, coupon.Amount);
             return _mapper.Map<Coupon>(coupon);
         }
+
+        public override async Task<Coupon> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
+        {
+            var coupon = _mapper.Map<Business.Entities.Coupon>(request.Coupon);
+
+            await _repository.CreateDiscount(coupon);
+            _logger.LogInformation("Discount is successfully created for Product Name = {productName}", coupon.ProductName);
+
+            return _mapper.Map<Coupon>(coupon);
+        }
+
+        public override async Task<Coupon> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
+        {
+            var coupon = _mapper.Map<Business.Entities.Coupon>(request.Coupon);
+
+            await _repository.UpdateDiscount(coupon);
+            _logger.LogInformation("Discount is successfully updated for Product Name = {productName}", coupon.ProductName);
+
+            return _mapper.Map<Coupon>(coupon);
+        }
+
+        public override async Task<DeleteDiscountReply> DeleteDiscount(DeleteDiscountRequest request, ServerCallContext context)
+        {
+            var deleted = await _repository.DeleteDiscount(request.ProductName);
+            _logger.LogInformation("Discount is successfully deleted for Product Name = {productName}", request.ProductName);
+            
+            return new DeleteDiscountReply()
+            {
+                Success = true
+            };
+        }
     }
 }
